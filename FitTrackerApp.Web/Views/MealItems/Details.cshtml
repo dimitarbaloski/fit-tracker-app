@@ -1,0 +1,109 @@
+﻿@model List<FitTrackerApp.Domain.DomainModels.MealDetails>
+
+
+@{
+    ViewData["Title"] = "Details";
+    var meals = ViewData["Meals"] as IEnumerable<FitTrackerApp.Domain.DomainModels.Meal>;
+
+}
+
+<h1>Details</h1>
+
+
+<h3>Eaten Meals</h3>
+
+@if (meals != null && meals.Any())
+{
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Meal Name</th>
+                <th>Date</th>
+                <th>Items</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var meal in meals)
+            {
+                <tr>
+                    <td>@meal.Name</td>
+                    <td>@meal.Date.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</td>
+                    <td>
+                        @if (meal.Items != null && meal.Items.Any())
+                        {
+                            <ul class="mb-0">
+                                @foreach (var item in meal.Items)
+                                {
+                                    <li>@item</li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <em>No items</em>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<form asp-action="FetchMealDetails" method="post" class="mb-4">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label for="query">Food Query</label>
+        <input type="text" name="query" class="form-control" placeholder="e.g., 2 eggs and toast" required />
+    </div>
+    <button type="submit" class="btn btn-success mt-2">Fetch Meal</button>
+</form>
+
+<h3>Fetch Multiple Meals</h3>
+<form asp-action="FetchMultipleMeals" method="post" class="mb-4">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label for="queries">Food Queries (one per line)</label>
+        <textarea name="queries" class="form-control" rows="5" placeholder="apple&#10;banana&#10;1 cup rice" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-success mt-2">Fetch Multiple Meals</button>
+</form>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Food Name</th>
+            <th>Calories</th>
+            <th>Protein (g)</th>
+            <th>Fat (g)</th>
+            <th>Carbs (g)</th>
+         
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Query</td>
+                    <td>@item.Calories</td>
+                    <td>@item.Protein</td>
+                    <td>@item.Fat</td>
+                    <td>@item.Carbs</td>
+                    <td>
+                        <form asp-action="Delete" asp-route-id="@item.Id" method="post" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr><td colspan="6">No meal items added yet.</td></tr>
+        }
+
+    </tbody>
+</table>
+
+

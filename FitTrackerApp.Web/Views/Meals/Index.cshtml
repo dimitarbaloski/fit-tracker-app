@@ -1,0 +1,53 @@
+﻿@model IEnumerable<FitTrackerApp.Domain.DomainModels.Meal>
+
+@{
+    ViewData["Title"] = "Meals";
+}
+
+<h1>Meals</h1>
+
+<p>
+    <a asp-action="CreateWithItems" class="btn btn-primary">Create New Meal</a>
+</p>
+
+<hr />
+
+
+
+<hr />
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Items</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <h3>Meals Eaten</h3>
+        @foreach (var meal in Model)
+        {
+            <tr>
+                <td>@meal.Name</td>
+                <td>@meal.Date.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</td>
+                <td>
+                    @if (meal.Items != null && meal.Items.Any())
+                    {
+                        @string.Join(", ", meal.Items)
+                    }
+                    else
+                    {
+                        <em>No items</em>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@meal.Id" class="btn btn-info btn-sm">Details</a>
+                    <a asp-action="Edit" asp-route-id="@meal.Id" class="btn btn-warning btn-sm">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@meal.Id" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

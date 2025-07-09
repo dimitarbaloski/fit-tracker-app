@@ -1,0 +1,90 @@
+﻿@model IEnumerable<FitTrackerApp.Domain.DomainModels.MealDetails>
+
+@{
+    ViewData["Title"] = "Index";
+
+    var meals = ViewData["Meals"] as IEnumerable<FitTrackerApp.Domain.DomainModels.Meal>;
+}
+
+<h1>Index</h1>
+
+@if (meals != null && meals.Any())
+{
+    <h3>Saved Meals</h3>
+    <ul>
+        @foreach (var meal in meals)
+        {
+            <li>@meal.Name (@meal.Date.ToLocalTime().ToString("yyyy-MM-dd HH:mm"))</li>
+        }
+    </ul>
+    <hr />
+}
+
+<form asp-action="FetchMealDetails" method="post" class="mb-4">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label for="query">Food Query</label>
+        <input type="text" name="query" class="form-control" placeholder="e.g., 2 eggs and toast" required />
+    </div>
+    <button type="submit" class="btn btn-success mt-2">Fetch Meal</button>
+</form>
+
+<h3>Fetch Multiple Meals</h3>
+<form asp-action="FetchMultipleMeals" method="post" class="mb-4">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label for="queries">Food Queries (one per line)</label>
+        <textarea name="queries" class="form-control" rows="5" placeholder="apple&#10;banana&#10;1 cup rice" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-success mt-2">Fetch Multiple Meals</button>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FoodName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Calories)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Protein)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fat)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Carbs)
+            </th>
+            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FoodName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Calories)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Protein)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fat)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Carbs)
+            </td>
+            
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

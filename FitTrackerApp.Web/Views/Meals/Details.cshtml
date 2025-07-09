@@ -1,0 +1,50 @@
+﻿@model FitTrackerApp.Domain.DomainModels.Meal
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Meal Details</h1>
+
+<div>
+    <h4>Meal</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Date.ToLocalTime().ToString("yyyy-MM-dd HH:mm")
+        </dd>
+    </dl>
+</div>
+
+<div>
+    <h4>Meal Items</h4>
+    @if (Model.Items != null && Model.Items.Any())
+    {
+        <ul class="list-group">
+            @foreach (var item in Model.Items)
+            {
+                <li class="list-group-item">@item</li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p><em>No meal items available.</em></p>
+    }
+</div>
+
+<hr />
+
+<div>
+    <a asp-action="Index" class="btn btn-secondary ms-2">Back to List</a>
+</div>

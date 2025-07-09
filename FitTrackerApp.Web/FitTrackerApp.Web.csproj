@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>aspnet-FitTrackerApp-5a332479-87b1-4b93-b1fd-7579e09fbf9c</UserSecretsId>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.17" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.17" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.17" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.17" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.17" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.17">
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+    <ProjectReference Include="..\FitTrackerApp.Domain\FitTrackerApp.Domain.csproj" />
+    <ProjectReference Include="..\FitTrackerApp.Repository\FitTrackerApp.Repository.csproj" />
+    <ProjectReference Include="..\FitTrackerApp.Service\FitTrackerApp.Service.csproj" />
+  </ItemGroup>
+
+</Project>

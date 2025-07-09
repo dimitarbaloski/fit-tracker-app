@@ -1,0 +1,66 @@
+﻿@model FitTrackerApp.Domain.DomainModels.Meal
+
+@{
+    ViewData["Title"] = "Edit Meal";
+}
+
+<h1>Edit Meal</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Date" class="control-label"></label>
+                <input asp-for="Date" type="datetime-local" class="form-control"
+                       value="@(Model?.Date == default ? "" : Model.Date.ToString("yyyy-MM-ddTHH:mm"))" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+
+            <hr />
+            <label>Meal Items</label>
+            <div id="mealItemsContainer">
+                @for (int i = 0; i < Model.Items.Count; i++)
+                {
+                    <div class="form-group">
+                        <input type="text" name="Items[@i]" value="@Model.Items[i]" class="form-control mt-1" />
+                    </div>
+                }
+            </div>
+
+            <button type="button" class="btn btn-secondary btn-sm mt-2" id="addItemBtn">Add Another Item</button>
+
+            <input type="hidden" asp-for="Id" />
+
+            <div class="form-group mt-3">
+                <input type="submit" value="Save" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary ms-2">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        let itemIndex = @Model.Items.Count;
+        document.getElementById('addItemBtn').addEventListener('click', function () {
+            const container = document.getElementById('mealItemsContainer');
+            const newInput = document.createElement('div');
+            newInput.classList.add('form-group');
+            newInput.innerHTML = `<input type="text" name="Items[${itemIndex}]" class="form-control mt-1" placeholder="Enter food name" />`;
+            container.appendChild(newInput);
+            itemIndex++;
+        });
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
