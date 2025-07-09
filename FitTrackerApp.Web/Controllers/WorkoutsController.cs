@@ -132,4 +132,5 @@ public class WorkoutsController : Controller
         var workouts = await _workoutService.GetByDateRange(from, to);
         return View("Index", workouts);
     }
+    
 }
