@@ -16,6 +16,8 @@ namespace FitTrackerApp.Service.Interface
         Task<ProgressEntry> Update(ProgressEntry progressEntry);
         Task<ProgressEntry> DeleteById(Guid id);
 
+        Task<(double WeightDiff, double BodyFatDiff)> GetProgressSummary(string userId);
+
         Task<IEnumerable<ProgressEntry>> GetByUserIdAsync(string userId);
     }
 }

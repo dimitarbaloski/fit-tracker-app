@@ -132,4 +132,26 @@ public class ProgressEntriesController : Controller
         ViewBag.UserId = userId;
         return View("Index", progressEntries);
     }
+
+    [HttpGet]
+    public async Task<IActionResult> ProgressSummary()
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        var progressSummary = await _progressEntryService.GetProgressSummary(userId);
+
+        if (progressSummary.WeightDiff == 0 && progressSummary.BodyFatDiff == 0)
+        {
+            ViewBag.Message = "Not enough progress entries to calculate summary.";
+           
+            return View("ProgressSummary");
+        }
+
+        ViewBag.WeightDiff = progressSummary.WeightDiff;
+        ViewBag.BodyFatDiff = progressSummary.BodyFatDiff;
+
+        return View();
+    }
+
+
 }

@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Progress Summary";
+}
+
+<h1>Progress Summary</h1>
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-warning">@ViewBag.Message</div>
+}
+else
+{
+    <p class="progress-summary">
+        Weight change since first entry: <strong>@($"{ViewBag.WeightDiff:F2}") kg</strong><br />
+        Body fat percentage change since first entry: <strong>@($"{ViewBag.BodyFatDiff:F2}") %</strong>
+    </p>
+
+}
+
+<a asp-action="Index" class="btn btn-secondary ms-2">Back to Progress Entries</a>

@@ -113,6 +113,33 @@ input[type="submit"] {
     margin-left: 0.5rem !important;
 }
 
+.progress-summary {
+    font-size: 1.3rem;
+    color: #1e272e;
+    background: linear-gradient(135deg, #e0f7fa, #ffffff);
+    padding: 20px 25px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 184, 148, 0.15);
+    max-width: 420px;
+    margin-bottom: 24px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    transition: transform 0.3s ease;
+}
+
+    .progress-summary:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 30px rgba(0, 184, 148, 0.3);
+    }
+
+    .progress-summary strong {
+        color: #00b894;
+        font-weight: 700;
+        font-size: 1.4rem;
+    }
+
+
+
 /* --- Home Page Special Styles --- */
 
 .main-content {

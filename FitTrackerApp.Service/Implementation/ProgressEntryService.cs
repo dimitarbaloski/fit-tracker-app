@@ -61,6 +61,8 @@ namespace FitTrackerApp.Service.Implementation
             return progressByUser;
         }
 
+        
+
         public async Task<ProgressEntry> Insert(ProgressEntry progressEntry)
         {
             return await _progressEntryRepository.InsertAsync(progressEntry);
@@ -75,5 +77,26 @@ namespace FitTrackerApp.Service.Implementation
         {
             return await _progressEntryRepository.UpdateAsync(progressEntry);
         }
+        public async Task<(double WeightDiff, double BodyFatDiff)> GetProgressSummary(string userId)
+        {
+            var userEntries = await _progressEntryRepository.GetAllAsync(selector: x => x,
+            predicate: x => x.UserId == userId);
+
+            var entries = userEntries.OrderBy(x => x.Date).ToList();
+
+            if (entries.Count < 2)
+            {
+                return (0, 0);
+            }
+
+            var first = entries.First();
+            var last = entries.Last();
+
+            double weightDiff = Math.Abs(last.WeightKg - first.WeightKg);
+            double bodyFatDiff = Math.Abs(last.BodyFatPercentage - first.BodyFatPercentage);
+
+            return (weightDiff, bodyFatDiff);
+        }
+        
     }
 }
