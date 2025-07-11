@@ -20,4 +20,8 @@
     <ProjectReference Include="..\FitTrackerApp.Domain\FitTrackerApp.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\Migrations\" />
+  </ItemGroup>
+
 </Project>
